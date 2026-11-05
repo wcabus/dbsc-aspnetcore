@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="DbscSample.AppHost/DbscSample.AppHost.csproj" />
+  <Project Path="DbscSample.Host/DbscSample.Host.csproj" />
+</Solution>

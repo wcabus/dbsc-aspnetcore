@@ -1,0 +1,48 @@
+﻿@page
+@model DbscSample.Host.Pages.Secure
+@using Microsoft.AspNetCore.Authentication
+
+<h1>Secure area</h1>
+
+<h2>User</h2>
+<p>Authenticated: @(User.Identity?.IsAuthenticated ?? false)</p>
+<p>Name: @(User.Identity?.Name ?? "(not set)")</p>
+
+<h2>Claims</h2>
+<table>
+    <thead>
+        <tr>
+            <th>Type</th>
+            <th>Value</th>
+            <th>Issuer</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var claim in User.Claims)
+        {
+            <tr>
+                <td>@claim.Type</td>
+                <td>@claim.Value</td>
+                <td>@claim.Issuer</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@{
+    var authenticationResult = await HttpContext.AuthenticateAsync();
+}
+
+<h2>Authentication ticket</h2>
+@if (authenticationResult.Succeeded && authenticationResult.Ticket is { } ticket)
+{
+    <p>Scheme: @ticket.AuthenticationScheme</p>
+    <p>Issued: @(ticket.Properties.IssuedUtc?.ToString("O") ?? "(not set)")</p>
+    <p>Expires: @(ticket.Properties.ExpiresUtc?.ToString("O") ?? "(not set)")</p>
+    <p>Persistent: @ticket.Properties.IsPersistent</p>
+    <p>Refresh allowed: @(ticket.Properties.AllowRefresh?.ToString() ?? "(not set)")</p>
+}
+else
+{
+    <p>No authentication ticket is available.</p>
+}
