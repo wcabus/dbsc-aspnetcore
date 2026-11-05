@@ -12,5 +12,9 @@
   <ItemGroup>
     <ProjectReference Include="..\DbscSample.Host\DbscSample.Host.csproj" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Redis" Version="13.6.4" />
+  </ItemGroup>
 
 </Project>

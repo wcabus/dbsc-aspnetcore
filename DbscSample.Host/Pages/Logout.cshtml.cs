@@ -15,6 +15,7 @@ public class Logout : PageModel
             RedirectUri = "/"
         };
         
+        // Let's not sign out of the OIDC provider, just our local cookie. Easier to reauthenticate during demos.
         return SignOut(props, "Cookies");
     }
 }

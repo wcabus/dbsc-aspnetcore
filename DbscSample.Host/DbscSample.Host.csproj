@@ -7,6 +7,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Aspire.StackExchange.Redis.DistributedCaching" Version="13.6.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="11.0.0-rc.3.26522.148" />
     <PackageReference Include="ThorstenSauter.AspNetCore.Authentication.DeviceBoundSessions" Version="0.1.0-rc.3" />
   </ItemGroup>
 
