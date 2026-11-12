@@ -46,7 +46,6 @@ public class Login : PageModel
 
         await HttpContext.SignInAsync("Cookies", new ClaimsPrincipal(identity));
 
-        // Only allow local redirects to avoid open-redirect issues.
         return LocalRedirect(Url.IsLocalUrl(ReturnUrl) ? ReturnUrl! : "/");
     }
 }
