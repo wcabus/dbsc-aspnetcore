@@ -3,7 +3,6 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddRazorPages();
 
-// Retry oidc + distributed ticket store, also adding the distributed store to the DBCS bits?
 builder.Services.AddAuthentication(options =>
     {
         options.DefaultScheme = "Cookies";
@@ -17,7 +16,6 @@ builder.Services.AddAuthentication(options =>
     })
     .AddDeviceBoundSession("Cookies", options =>
     {
-        // Don't set these too short. Refreshing too often will trigger a quota on the TPM and will cause the refresh to fail.
         options.ShortLivedCookieExpiration = TimeSpan.FromMinutes(4);
         options.ChallengeMaxAge = TimeSpan.FromSeconds(2);
     });
