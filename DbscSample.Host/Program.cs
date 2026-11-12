@@ -35,7 +35,7 @@ builder.Services.AddAuthentication(options =>
     })
     .AddCookie("Cookies", options =>
     {
-        options.Cookie.Name = "__dbcs-auth";
+        options.Cookie.Name = "__dbsc-auth";
         
         options.LoginPath = "/Login";
         options.LogoutPath = "/Logout";
