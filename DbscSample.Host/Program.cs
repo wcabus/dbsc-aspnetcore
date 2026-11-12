@@ -1,6 +1,33 @@
+using Microsoft.AspNetCore.HttpLogging;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
+
+builder.Services.AddHttpLogging(options =>
+{
+    options.LoggingFields = HttpLoggingFields.All;
+
+    foreach (var header in new[]
+             {
+                 "Cookie", "Origin", "Priority", "Sec-Fetch-Mode", "Sec-Fetch-Dest", "Sec-Fetch-Site",
+                 "Sec-Secure-Session-Id", "Secure-Session-Response", "Secure-Session-Challenge"
+             })
+    {
+        options.RequestHeaders.Add(header);
+    }
+
+    foreach (var header in new[]
+             {
+                 "Set-Cookie", "Cache-Control", "Pragma",
+                 "Secure-Session-Registration", "Secure-Session-Challenge"
+             })
+    {
+        options.ResponseHeaders.Add(header);
+    }
+    
+    options.CombineLogs = true;
+});
 
 builder.Services.AddAuthentication(options =>
     {
@@ -30,6 +57,13 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseWhen(
+        ctx => ctx.Request.Path.StartsWithSegments("/.well-known/dbsc"),
+        branch => branch.UseHttpLogging());
+}
 
 app.UseAuthentication();
 app.UseAuthorization();
